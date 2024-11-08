@@ -1,0 +1,16 @@
+// 特定のレイヤーを指定して削除する（レイヤー名は部分一致でも削除する）
+// 親レイヤー、サブレイヤーにも適用される
+
+
+var targetName = "ここにレイヤー名を入れる";  // 部分一致で削除したいレイヤーの名前の一部を指定
+recurse(app.activeDocument.layers);
+
+function recurse(_layers) {
+    for (var i = _layers.length - 1; i > -1 ; i--) {
+        if (_layers[i].name.indexOf(targetName) !== -1) {  // 部分一致チェック
+            _layers[i].remove();
+            continue;
+        }
+        recurse(_layers[i].layers);  // サブレイヤーも再帰的にチェック
+    }
+}
